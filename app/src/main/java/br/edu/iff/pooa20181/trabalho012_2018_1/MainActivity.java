@@ -1,52 +1,73 @@
 package br.edu.iff.pooa20181.trabalho012_2018_1;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import br.edu.iff.pooa20181.trabalho012_2018_1.controller.MainActivityController;
 
 public class MainActivity extends AppCompatActivity {
+
+    private RadioGroup rbGrupo;
+    private RadioButton rbGerente;
+    private RadioButton rbSupervisor;
+    private RadioButton rbServente;
+    private TextView tHoras;
+    private TextView tFaltas;
+    private Spinner spFilhos;
+    private Button bCalcular;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        toolbar.setTitle(this.getString(R.string.fantasy_app_name));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        this.rbGrupo = findViewById(R.id.rbGrupo);
+
+        this.rbGerente = findViewById(R.id.rbGerente);
+
+        this.rbSupervisor = findViewById(R.id.rbSupervisor);
+        this.rbServente = findViewById(R.id.rbServente);
+
+        this.tHoras = findViewById(R.id.tHoras);
+        this.tFaltas = findViewById(R.id.tFaltas);
+
+        this.spFilhos = findViewById(R.id.spFilhos);
+
+        Integer[] int_numbers = new Integer[]{0,1,2,3,4,5,6,7,8,9,10};
+        ArrayAdapter<Integer> adpt =
+        new ArrayAdapter<Integer>(this, R.layout.support_simple_spinner_dropdown_item, int_numbers);
+
+        this.spFilhos.setAdapter(adpt);
+
+        this.bCalcular = findViewById(R.id.bCalcular);
+        this.bCalcular.setOnClickListener(new MainActivityController(this));
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public TextView gettHoras() {
+        return tHoras;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public TextView gettFaltas() {
+        return tFaltas;
     }
+
+    public Spinner getSpFilhos() {
+        return spFilhos;
+    }
+
+    public RadioGroup getRbGrupo() {
+        return rbGrupo;
+    }
+
 }
+
